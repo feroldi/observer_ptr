@@ -35,8 +35,8 @@ struct observer_ptr
 
   constexpr auto release() noexcept -> element_type*
   {
-    element_type* p = this->ptr;
-    this->ptr = nullptr;
+    element_type* p = this->get();
+    this->reset();
     return p;
   }
 
