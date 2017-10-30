@@ -1,9 +1,27 @@
-// Copyright 2017, by Mário Feroldi
+// MIT License
+//
+// Copyright (c) 2017 Mário Feroldi
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 //
 // observer_ptr (Library Fundamentals TS v2)
 // http://en.cppreference.com/w/cpp/experimental/observer_ptr
-//
-// This code is licensed under the MIT License (MIT).
 
 #pragma once
 
@@ -11,7 +29,7 @@
 #include <type_traits>
 #include <functional>
 
-namespace ccompiler
+namespace sunfyre
 {
 
 template <typename T>
@@ -72,65 +90,65 @@ private:
 
 template <typename T>
 inline auto make_observer(T* p) noexcept
-{ return ::ccompiler::observer_ptr<T>(p); }
+{ return ::sunfyre::observer_ptr<T>(p); }
 
 template <typename W1, typename W2>
-inline bool operator== (const ::ccompiler::observer_ptr<W1>& p1, const ::ccompiler::observer_ptr<W2>& p2)
+inline bool operator== (const ::sunfyre::observer_ptr<W1>& p1, const ::sunfyre::observer_ptr<W2>& p2)
 { return p1.get() == p2.get(); }
 
 template <typename W1, typename W2>
-inline bool operator!= (const ::ccompiler::observer_ptr<W1>& p1, const ::ccompiler::observer_ptr<W2>& p2)
+inline bool operator!= (const ::sunfyre::observer_ptr<W1>& p1, const ::sunfyre::observer_ptr<W2>& p2)
 { return !(p1 == p2); }
 
 template <typename W>
-inline bool operator== (const ::ccompiler::observer_ptr<W>& p, std::nullptr_t) noexcept
+inline bool operator== (const ::sunfyre::observer_ptr<W>& p, std::nullptr_t) noexcept
 { return !p; }
 
 template <typename W>
-inline bool operator== (std::nullptr_t, const ::ccompiler::observer_ptr<W>& p) noexcept
+inline bool operator== (std::nullptr_t, const ::sunfyre::observer_ptr<W>& p) noexcept
 { return !p; }
 
 template <typename W>
-inline bool operator!= (const ::ccompiler::observer_ptr<W>& p, std::nullptr_t) noexcept
+inline bool operator!= (const ::sunfyre::observer_ptr<W>& p, std::nullptr_t) noexcept
 { return static_cast<bool>(p); }
 
 template <typename W>
-inline bool operator!= (std::nullptr_t, const ::ccompiler::observer_ptr<W>& p) noexcept
+inline bool operator!= (std::nullptr_t, const ::sunfyre::observer_ptr<W>& p) noexcept
 { return static_cast<bool>(p); }
 
 template <typename W1, typename W2>
-inline bool operator< (const ::ccompiler::observer_ptr<W1>& p1, const ::ccompiler::observer_ptr<W2>& p2)
+inline bool operator< (const ::sunfyre::observer_ptr<W1>& p1, const ::sunfyre::observer_ptr<W2>& p2)
 {
   using W3 = std::common_type_t<W1*, W2*>;
   return std::less<W3>()(p1.get(), p2.get());
 }
 
 template <typename W1, typename W2>
-inline bool operator> (const ::ccompiler::observer_ptr<W1>& p1, const ::ccompiler::observer_ptr<W2>& p2)
+inline bool operator> (const ::sunfyre::observer_ptr<W1>& p1, const ::sunfyre::observer_ptr<W2>& p2)
 { return p2 < p1; }
 
 template <typename W1, typename W2>
-inline bool operator<= (const ::ccompiler::observer_ptr<W1>& p1, const ::ccompiler::observer_ptr<W2>& p2)
+inline bool operator<= (const ::sunfyre::observer_ptr<W1>& p1, const ::sunfyre::observer_ptr<W2>& p2)
 { return !(p2 < p1); }
 
 template <typename W1, typename W2>
-inline bool operator>= (const ::ccompiler::observer_ptr<W1>& p1, const ::ccompiler::observer_ptr<W2>& p2)
+inline bool operator>= (const ::sunfyre::observer_ptr<W1>& p1, const ::sunfyre::observer_ptr<W2>& p2)
 { return !(p1 < p2); }
 
-} // namespace ccompiler
+} // namespace sunfyre
 
 namespace std
 {
 template <typename W>
-inline void swap(::ccompiler::observer_ptr<W>& lhs, ::ccompiler::observer_ptr<W>& rhs) noexcept
+inline void swap(::sunfyre::observer_ptr<W>& lhs, ::sunfyre::observer_ptr<W>& rhs) noexcept
 { lhs.swap(rhs); }
 
 template <typename T>
-struct hash<::ccompiler::observer_ptr<T>>
+struct hash<::sunfyre::observer_ptr<T>>
 {
   hash() noexcept = default;
 
-  constexpr auto operator() (::ccompiler::observer_ptr<T> p) noexcept -> std::size_t
+  constexpr auto operator() (::sunfyre::observer_ptr<T> p) noexcept -> std::size_t
   {
     return std::hash<T*>()(p.get());
   }
